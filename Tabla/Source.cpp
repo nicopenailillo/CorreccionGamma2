@@ -37,7 +37,7 @@ std::cout << "ingrese foto a procesar" << std::endl;
 	cv::cvtColor(image, img, cv::COLOR_BGR2YUV);
 
 	std::vector<cv::Mat> YUV_planes;
-	cv::split(image, YUV_planes);
+	cv::split(img, YUV_planes);
 	cv::LUT(YUV_planes[0], lut, YUV_planes[0]);
 
 	

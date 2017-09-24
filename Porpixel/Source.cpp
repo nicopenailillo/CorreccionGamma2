@@ -27,25 +27,24 @@ std::cout << "ingrese foto a procesar" << std::endl;
 	unsigned int startTicks, endTicks;
 	unsigned int milisecs;
 	startTicks = GetTickCount();
+	cv::Mat img;
+	cv::cvtColor(image, img, cv::COLOR_BGR2YUV);
 
-	cv::Mat_<cv::Vec3b> _I = image;
+	cv::Mat_<cv::Vec3b> _I = img;
 	
-     for (int i = 0; i < image.rows; ++i)
-	 for (int j = 0; j < image.cols; ++j) {
-		_I(i, j)[0] = funciongamma(_I(i, j)[0], factor)*255;
-		_I(i, j)[1] = funciongamma(_I(i, j)[1], factor)*255;
-	    _I(i, j)[2] = funciongamma(_I(i, j)[2], factor)*255;
-		
+     for (int i = 0; i < img.rows; ++i)
+	 for (int j = 0; j < img.cols; ++j) {
+		_I(i, j)[0] = funciongamma(_I(i, j)[0], factor)*255;	
 	}
- image = _I;
+ img = _I;
 
 
-
-
- cv::imshow("imagen", image);
  endTicks = GetTickCount();
  milisecs = endTicks - startTicks;
  printf("Tiempo transcurrido: %lf\n", milisecs / 1000.0);
+
+ cv::imshow("imagen", img);
+
     cv::waitKey(0);
 	return 0;
 }
