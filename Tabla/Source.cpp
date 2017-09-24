@@ -33,21 +33,21 @@ std::cout << "ingrese foto a procesar" << std::endl;
 		double x = (double)i / 256.0;
 		plut[i] = cvRound( 256.0 * std::pow(x, factor));
 	}
-	
-	std::vector<cv::Mat> bgr_planes;
-	cv::split(image, bgr_planes);
-	cv::LUT(bgr_planes[0], lut, bgr_planes[0]);
-	cv::LUT(bgr_planes[1], lut, bgr_planes[1]);
-	cv::LUT(bgr_planes[2], lut, bgr_planes[2]);
+	cv::Mat img;
+	cv::cvtColor(image, img, cv::COLOR_BGR2YUV);
 
-	cv::Mat out;
-	cv::merge(bgr_planes, out);
-	cv::imshow("Remezclado", out);
+	std::vector<cv::Mat> YUV_planes;
+	cv::split(image, YUV_planes);
+	cv::LUT(YUV_planes[0], lut, YUV_planes[0]);
+
+	
 	
 	endTicks = GetTickCount();
 	milisecs = endTicks - startTicks;
 	printf("Tiempo transcurrido: %lf\n", milisecs / 1000.0);
-
+	cv::Mat out;
+	cv::merge(YUV_planes, out);
+	cv::imshow("Remezclado", out);
     
     cv::waitKey(0);
 	return 0;
